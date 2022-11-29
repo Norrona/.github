@@ -1,0 +1,47 @@
+name: "notify build start"
+
+on:
+  workflow_call:
+    secrets:
+      SLACK_BUILD_UPDATE:
+        required: true
+    inputs:
+      APP_NAME:
+        required: true
+        type: string
+    outputs:
+      TS:
+        value: ${{ jobs.build_start.outputs.output1 }}
+
+jobs:
+  notify:
+    # name: Sucess
+    runs-on: ubuntu-latest
+    outputs:
+      output1: ${{ steps.slack.outputs.ts }}
+    steps:
+      - id: slack
+        name: Notify build start
+        uses: slackapi/slack-github-action@v1.23.0
+        with:
+        # The following message update step does not accept a channel name.
+        # Setting a channel ID here for consistency is highly recommended.
+          channel-id: "C04BFN79UMS"
+          payload: |
+            {
+              "text": "Build started for *${{ inputs.APP_NAME }}*\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}",
+              "attachments": [
+                {
+                  "color": "dbab09",
+                  "fields": [
+                    {
+                      "title": "Status",
+                      "short": true,
+                      "value": "In Progress"
+                    }
+                  ]
+                }
+              ]
+            }
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BUILD_UPDATE}}
