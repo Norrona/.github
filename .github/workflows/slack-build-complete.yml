@@ -1,0 +1,74 @@
+name: "notify build complete"
+
+on:
+  workflow_call:
+    secrets:
+      SLACK_BUILD_UPDATE:
+        required: true
+    inputs:
+      APP_NAME:
+        required: true
+        type: string
+      TS:
+        required: true
+        type: string
+      BUILD_RESULT:
+        required: true
+        type: string
+
+jobs:
+  notify:
+    # name: completed
+    runs-on: ubuntu-latest
+    steps:
+      - uses: slackapi/slack-github-action@v1.23.0
+        if: ${{ inputs.BUILD_RESULT == 'failure' }}
+        with:
+          # Unlike the step posting a new message, this step does not accept a channel name.
+          # Please use a channel ID, not a name here.
+          channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
+          update-ts: ${{ inputs.TS }}
+          payload: |
+            {
+              "text": "Build failed for ${{ inputs.APP_NAME }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}",
+              "attachments": [
+                {
+                  "color": "dc3545",
+                  "fields": [
+                    {
+                      "title": "Status",
+                      "short": true,
+                      "value": "Failed"
+                    }
+                  ]
+                }
+              ]
+            }
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BUILD_UPDATE}}
+
+      - uses: slackapi/slack-github-action@v1.23.0
+        if: ${{ inputs.BUILD_RESULT  == 'success' }}
+        with:
+          # Unlike the step posting a new message, this step does not accept a channel name.
+          # Please use a channel ID, not a name here.
+          channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
+          update-ts: ${{ inputs.TS }}
+          payload: |
+            {
+              "text": "Build finished for ${{ inputs.APP_NAME }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}",
+              "attachments": [
+                {
+                  "color": "28a745",
+                  "fields": [
+                    {
+                      "title": "Status",
+                      "short": true,
+                      "value": "Completed"
+                    }
+                  ]
+                }
+              ]
+            }
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BUILD_UPDATE}}
