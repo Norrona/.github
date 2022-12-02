@@ -26,12 +26,12 @@ jobs:
               "text": "Build failed for travel\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}",
               "attachments": [
                 {
-                  "color": "dc3545",
+                  "color": "28a745",
                   "fields": [
                     {
                       "title": "Status",
                       "short": true,
-                      "value": "Failed"
+                      "value": "Completed"
                     }
                   ]
                 }
