@@ -26,7 +26,7 @@ jobs:
                   "color": "dbab09",
                   "fields": [
                     {
-                      "title": "Build started for *${{ github.repository }}*<https://www.github.com/${{ github.repository }}/actions| [link]>",
+                      "title": "Build started for ${{ github.repository }}",
                       "short": true,
                       "value": "In Progress"
                     }
