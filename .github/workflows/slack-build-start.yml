@@ -31,7 +31,7 @@ jobs:
                       "value": "Status: In Progress"
                     },
                     {
-                      "value": "https://www.github.com/${{ github.repository }}/actions"
+                      "value": "https://www.github.com/${{ github.repository }}/actions/${{ github.run_id }}"
                     }
                   ]
                 }
