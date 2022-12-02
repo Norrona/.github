@@ -6,6 +6,7 @@ on:
       SLACK_BUILD_UPDATE:
         required: true
 
+# "text": "Build started for *${{ github.repository }}*<https://www.github.com/${{ github.repository }}/actions| [link]>\n",
 jobs:
   notify:
     # name: Sucess
@@ -26,8 +27,11 @@ jobs:
                   "fields": [
                     {
                       "title": "Build started for ${{ github.repository }}",
-                      "short": true,
+                      "short": false,
                       "value": "In Progress"
+                    },
+                    {
+                      "value": "<https://www.github.com/${{ github.repository }}/actions| [link]>"
                     }
                   ]
                 }
