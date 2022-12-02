@@ -20,7 +20,7 @@ jobs:
           channel-id: "C04BFN79UMS"
           payload: |
             {
-              "text": "Build started for *${{ github.repository }}*\nGithub ref:${{ github.ref_name }}\n${{ github}}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}\n",
+              "text": "Build started for *${{ github.repository }}*\n${{ github.repositoryURL }}\n ",
               "attachments": [
                 {
                   "color": "dbab09",
