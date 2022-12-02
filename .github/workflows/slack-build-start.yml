@@ -5,20 +5,11 @@ on:
     secrets:
       SLACK_BUILD_UPDATE:
         required: true
-    inputs:
-      APP_NAME:
-        required: true
-        type: string
-    outputs:
-      TS:
-        value: ${{ jobs.build_start.outputs.output1 }}
 
 jobs:
   notify:
     # name: Sucess
     runs-on: ubuntu-latest
-    outputs:
-      output1: ${{ steps.slack.outputs.ts }}
     steps:
       - id: slack
         name: Notify build start
@@ -29,7 +20,7 @@ jobs:
           channel-id: "C04BFN79UMS"
           payload: |
             {
-              "text": "Build started for *${{ github.repository }}*\nGithub ref:${{ github.ref_name }}\n${{ github}}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"\n,
+              "text": "Build started for *${{ github.repository }}*\nGithub ref:${{ github.ref_name }}\n${{ github}}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}\n",
               "attachments": [
                 {
                   "color": "dbab09",
