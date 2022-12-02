@@ -32,6 +32,9 @@ jobs:
                     },
                     {
                       "value": "https://www.github.com/${{ github.repository }}/actions"
+                    },
+                    {
+                      "value:" "${{ github.run_id }}"
                     }
                   ]
                 }
