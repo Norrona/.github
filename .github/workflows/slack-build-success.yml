@@ -5,33 +5,28 @@ on:
     secrets:
       SLACK_BUILD_UPDATE:
         required: true
-    # inputs:
-    #   APP_NAME:
-    #     required: true
-    #     type: string
-    # outputs:
-    #   TS:
-    #     value: ${{ jobs.build_start.outputs.output1 }}
+
+# "text": "Build succeeded for *${{ github.repository }}*\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}",
 jobs:
   on-failure:
     runs-on: ubuntu-latest
-#     if: ${{ github.event.workflow_run.conclusion == 'failure' }}
     steps:
       - uses: slackapi/slack-github-action@v1.23.0
         with:
           channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
-          # update-ts: ${{ inputs.TS }}
           payload: |
             {
-              "text": "Build succeeded for *${{ github.repository }}*\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}",
               "attachments": [
                 {
                   "color": "28a745",
                   "fields": [
                     {
-                      "title": "Status",
-                      "short": true,
-                      "value": "Completed"
+                      "title": "Build succeeded for ${{ github.repository }}",
+                      "short": false,
+                      "value": "Status: Completed"
+                    },
+                    {
+                      "value": "https://www.github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
                     }
                   ]
                 }

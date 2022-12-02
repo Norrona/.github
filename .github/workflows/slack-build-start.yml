@@ -6,18 +6,14 @@ on:
       SLACK_BUILD_UPDATE:
         required: true
 
-# "text": "Build started for *${{ github.repository }}*<https://www.github.com/${{ github.repository }}/actions| [link]>\n",
 jobs:
-  notify:
-    # name: Sucess
+  start:
     runs-on: ubuntu-latest
     steps:
       - id: slack
         name: Notify build start
         uses: slackapi/slack-github-action@v1.23.0
         with:
-        # The following message update step does not accept a channel name.
-        # Setting a channel ID here for consistency is highly recommended.
           channel-id: "C04BFN79UMS"
           payload: |
             {
