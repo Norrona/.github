@@ -20,13 +20,13 @@ jobs:
           channel-id: "C04BFN79UMS"
           payload: |
             {
-              "text": "Build started for *${{ github.repository }}*<https://www.github.com/${{ github.repository }}/actions|[link]>\n",
+              "text": "Build started for *${{ github.repository }}*<https://www.github.com/${{ github.repository }}/actions| [link]>\n",
               "attachments": [
                 {
                   "color": "dbab09",
                   "fields": [
                     {
-                      "title": "Status",
+                      "title": "Build started for *${{ github.repository }}*<https://www.github.com/${{ github.repository }}/actions| [link]>",
                       "short": true,
                       "value": "In Progress"
                     }
