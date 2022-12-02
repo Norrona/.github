@@ -28,10 +28,10 @@ jobs:
                     {
                       "title": "Build started for ${{ github.repository }}",
                       "short": false,
-                      "value": "In Progress"
+                      "value": "Status: In Progress"
                     },
                     {
-                      "value": "<https://www.github.com/${{ github.repository }}/actions| [link]>"
+                      "value": "https://www.github.com/${{ github.repository }}/actions"
                     }
                   ]
                 }
