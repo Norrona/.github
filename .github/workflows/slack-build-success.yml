@@ -23,7 +23,7 @@ jobs:
           # update-ts: ${{ inputs.TS }}
           payload: |
             {
-              "text": "Build failed for travel\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}",
+              "text": "Build succeeded for *${{ github.repository }}*\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}",
               "attachments": [
                 {
                   "color": "28a745",
