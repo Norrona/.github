@@ -2,6 +2,10 @@ name: "notify build start"
 
 on:
   workflow_call:
+    inputs:
+      WORKFLOW_NAME:
+        required: false
+        type: string
     secrets:
       SLACK_BUILD_UPDATE:
         required: true
@@ -28,7 +32,7 @@ jobs:
                       "value": "Status: In Progress"
                     },
                     {
-                      "value": "https://www.github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+                      "value": "https://www.github.com/${{ github.repository }}/actions/workflows/${{ env.WORKFLOW_FILE }}"
                     }
                   ]
                 }
@@ -36,3 +40,4 @@ jobs:
             }
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BUILD_UPDATE}}
+          WORKFLOW_FILE: ${{ inputs.WORKFLOW_NAME }}.yaml
