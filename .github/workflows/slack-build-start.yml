@@ -14,7 +14,6 @@ jobs:
   start:
     runs-on: ubuntu-latest
     steps:
-      - run: env
       - id: slack
         name: Notify build start
         uses: slackapi/slack-github-action@v1.23.0
