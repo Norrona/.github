@@ -29,7 +29,7 @@ jobs:
                       "value": "Status: Failed"
                     },
                     {
-                      "value": "https://www.github.com/${{ github.repository }}/actions/workflows/${{ env.WORKFLOW_FILE }}"
+                      "value": "<https://www.github.com/${{ github.repository }}/actions/workflows/${{ env.WORKFLOW_FILE }}|link>"
                     }
                   ]
                 }
