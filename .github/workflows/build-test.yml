@@ -1,0 +1,21 @@
+name: build test
+on:
+  workflow_call:
+    # secrets:
+    # inputs:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+
+      # Authenticate to Google CLoud
+    - id: "auth"
+      name: "Authenticate to Google Cloud"
+      uses: "google-github-actions/auth@v1"
+      if: github.event_name != 'pull_request'
+      with:
+        workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER_CICD }}
+        service_account: ${{ secrets.SA_EMAIL_CICD }}
+        token_format: "access_token"
+
