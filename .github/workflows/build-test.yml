@@ -15,6 +15,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
+    - run: ls
       # Authenticate to Google CLoud
     - id: "auth"
       name: "Authenticate to Google Cloud"
