@@ -24,10 +24,6 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
-    - run: |
-        ls
-        echo "${{ inputs.DOCKERFILE_PATH }}"
-
       # Authenticate to Google CLoud
     - id: "auth"
       name: "Authenticate to Google Cloud"
@@ -59,7 +55,7 @@ jobs:
     # ON PR Build and Test
     - name: Build and test
       uses: docker/build-push-action@v3
-      # if: github.event_name == 'pull_request'
+      if: github.event_name == 'pull_request'
       with:
         context: .
         push: false
@@ -71,7 +67,7 @@ jobs:
     # Build & Push Docker Container Image to Google Artifact Registry
     - name: Build and push
       uses: docker/build-push-action@v3
-      # if: github.event_name != 'pull_request'
+      if: github.event_name != 'pull_request'
       env:
         DOCKER_IMAGE: europe-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID_CICD }}/norrona-services/${{ inputs.APP_NAME }}
       with:
