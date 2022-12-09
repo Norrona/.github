@@ -24,6 +24,10 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
+    - run:
+        ls
+        echo "${{ inputs.DOCKERFILE_PATH }}"
+
       # Authenticate to Google CLoud
     - id: "auth"
       name: "Authenticate to Google Cloud"
