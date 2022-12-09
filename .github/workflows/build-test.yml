@@ -2,12 +2,12 @@ name: build test
 on:
   workflow_call:
     secrets:
-      SA_EMAIL_CICD:
-        required: true
-      NUGET_PASSWORD:
-        required: true
-      GH_NUGET_PASSWORD:
-        required: true
+      # SA_EMAIL_CICD:
+      #   required: true
+      # NUGET_PASSWORD:
+      #   required: true
+      # GH_NUGET_PASSWORD:
+      #   required: true
     inputs:
       DOCKERFILE_PATH:
         required: true
