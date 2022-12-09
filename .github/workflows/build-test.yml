@@ -28,7 +28,7 @@ jobs:
     # Docker login to GCP
     - name: Docker login to GCP
       uses: docker/login-action@v2
-      if: github.event_name != 'pull_request'
+      # if: github.event_name != 'pull_request'
       with:
         registry: europe-docker.pkg.dev
         username: oauth2accesstoken
@@ -37,6 +37,8 @@ jobs:
     # Set SHORT SHA
     - run: |
         echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+        echo "$GITHUB_ENV"
+
 
     # Build setup
     - name: Set up Docker Buildx
