@@ -8,8 +8,13 @@ on:
         required: true
       GH_NUGET_PASSWORD:
         required: true
-
-    # inputs:
+    inputs:
+      DOCKERFILE_PATH:
+        required: true
+        type: string
+      APP_NAME:
+        required: true
+        type: string
 
 jobs:
   test:
@@ -50,7 +55,7 @@ jobs:
     # ON PR Build and Test
     - name: Build and test
       uses: docker/build-push-action@v3
-      if: github.event_name == 'pull_request'
+      # if: github.event_name == 'pull_request'
       with:
         context: .
         push: false
@@ -58,3 +63,20 @@ jobs:
         build-args: |
           NUGETPASSWORD=${{ secrets.NUGET_PASSWORD }}
           GHNUGETPASSWORD=${{ secrets.GH_NUGET_PASSWORD }}
+
+    # Build & Push Docker Container Image to Google Artifact Registry
+    - name: Build and push
+      uses: docker/build-push-action@v3
+      # if: github.event_name != 'pull_request'
+      env:
+        DOCKER_IMAGE: europe-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID_CICD }}/norrona-services/${{ inputs.APP_NAME }}
+      with:
+        context: .
+        push: true
+        file: ${{ inputs.DOCKERFILE_PATH }}
+        build-args: |
+          NUGETPASSWORD=${{ secrets.NUGET_PASSWORD }}
+          GHNUGETPASSWORD=${{ secrets.GH_NUGET_PASSWORD }}
+        tags: |
+          ${{ env.DOCKER_IMAGE }}:${{ env.SHORT_SHA }},
+          ${{ env.DOCKER_IMAGE }}:latest
