@@ -59,7 +59,7 @@ jobs:
       with:
         context: .
         push: false
-        file: ${{ env.DOCKERFILE_PATH }}
+        file: ${{ inputs.DOCKERFILE_PATH }}
         build-args: |
           NUGETPASSWORD=${{ secrets.NUGET_PASSWORD }}
           GHNUGETPASSWORD=${{ secrets.GH_NUGET_PASSWORD }}
