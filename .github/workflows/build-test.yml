@@ -37,7 +37,7 @@ jobs:
     # Set SHORT SHA
     - run: |
         echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
-        echo "$GITHUB_ENV"
+        echo "$(git rev-parse --short HEAD)"
 
 
     # Build setup
