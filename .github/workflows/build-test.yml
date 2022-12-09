@@ -1,18 +1,14 @@
 name: build test
 on:
   workflow_call:
-    # secrets:
-      # SA_EMAIL_CICD:
-      #   required: true
-      # NUGET_PASSWORD:
-      #   required: true
-      # GH_NUGET_PASSWORD:
-      #   required: true
     inputs:
       DOCKERFILE_PATH:
         required: true
         type: string
       APP_NAME:
+        required: true
+        type: string
+      DOCKER_REPO:
         required: true
         type: string
 
@@ -69,7 +65,7 @@ jobs:
       uses: docker/build-push-action@v3
       if: github.event_name != 'pull_request'
       env:
-        DOCKER_IMAGE: europe-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID_CICD }}/norrona-services/${{ inputs.APP_NAME }}
+        DOCKER_IMAGE: ${{ inputs.DOCKER_REPO }}/${{ inputs.APP_NAME }}
       with:
         context: .
         push: true
@@ -80,3 +76,10 @@ jobs:
         tags: |
           ${{ env.DOCKER_IMAGE }}:${{ env.SHORT_SHA }},
           ${{ env.DOCKER_IMAGE }}:latest
+
+  prod:
+    runs-on: ubuntu-latest
+    if: ${{ github.ref_type == 'tag' }}
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
