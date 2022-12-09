@@ -8,9 +8,6 @@ on:
       APP_NAME:
         required: true
         type: string
-      DOCKER_REPO:
-        required: true
-        type: string
 
 jobs:
   test:
@@ -65,7 +62,7 @@ jobs:
       uses: docker/build-push-action@v3
       # if: github.event_name != 'pull_request'
       env:
-        DOCKER_IMAGE: ${{ inputs.DOCKER_REPO }}/${{ inputs.APP_NAME }}
+        DOCKER_IMAGE: ${{ secrets.DOCKER_REPO }}/${{ inputs.APP_NAME }}
       with:
         context: .
         # push: true
