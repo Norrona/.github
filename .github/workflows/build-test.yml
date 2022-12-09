@@ -40,6 +40,10 @@ jobs:
     - run: |
         echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
 
+    - env:
+        PUSH: ${{ github.event_name != 'pull_request'}}
+      run: |
+        echo $PUSH
 
     # Build setup
     - name: Set up Docker Buildx
