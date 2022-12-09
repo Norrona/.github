@@ -8,14 +8,13 @@ on:
     # inputs:
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     steps:
 
     - name: Checkout
       uses: actions/checkout@v3
 
-    - run: ls
       # Authenticate to Google CLoud
     - id: "auth"
       name: "Authenticate to Google Cloud"
@@ -25,4 +24,21 @@ jobs:
         workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER_CICD }}
         service_account: ${{ secrets.SA_EMAIL_CICD }}
         token_format: "access_token"
+
+    # Docker login to GCP
+    - name: Docker login to GCP
+      uses: docker/login-action@v2
+      if: github.event_name != 'pull_request'
+      with:
+        registry: europe-docker.pkg.dev
+        username: oauth2accesstoken
+        password: ${{ steps.auth.outputs.access_token }}
+
+    # Set SHORT SHA
+    - run: |
+        echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+
+    # Build setup
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
 
