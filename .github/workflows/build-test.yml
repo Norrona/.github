@@ -69,3 +69,28 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3
+
+    - id: "auth"
+      name: "Authenticate to Google Cloud"
+      uses: "google-github-actions/auth@v1"
+      with:
+        workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER_CICD }}
+        service_account: ${{ secrets.SA_EMAIL_CICD }}
+        token_format: "access_token"
+
+    # Set Docker image repo and name as variable
+    - run: |
+        echo "DOCKER_IMAGE=${{ secrets.DOCKER_REPO }}/${{ inputs.APP_NAME }}" >> $GITHUB_ENV
+
+    # Set semantic tag variable
+    - if: ${{ github.ref_type == 'tag' }}
+      run: |
+        echo "SEM_TAG=${{ github.ref_name }}" >> $GITHUB_ENV
+
+    # Tag latest docker image with semantic tag
+    - name: Docker pull, tag & push
+      if: ${{ github.ref_type == 'tag' }}
+      run: |
+        docker pull $DOCKER_IMAGE:latest
+        docker image tag $DOCKER_IMAGE:latest $DOCKER_IMAGE:$SEM_TAG
+        docker image push $DOCKER_IMAGE:$SEM_TAG
