@@ -2,19 +2,20 @@ name: "notify build start"
 
 on:
   workflow_call:
-    inputs:
-      WORKFLOW_NAME:
-        required: false
-        type: string
+    outputs:
+      update-ts:
+        value: ${{ jobs.slack.outputs.output1 }}
     secrets:
       SLACK_BUILD_UPDATE:
         required: true
 
 jobs:
-  start:
+  slack:
     runs-on: ubuntu-latest
+    outputs:
+      output1: ${{ steps.start.outputs.ts }}
     steps:
-      - id: slack
+      - id: start
         name: Notify build start
         uses: slackapi/slack-github-action@v1.23.0
         with:

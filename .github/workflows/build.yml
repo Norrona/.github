@@ -10,9 +10,12 @@ on:
         type: string
 
 jobs:
+  # Notify build start on slack
   slack-start:
     uses: norrona/workflows/.github/workflows/slack-build-start.yml@workflows/build_slack_integration
     secrets: inherit
+
+  # Build test
   test:
     runs-on: ubuntu-latest
     if: ${{ github.ref_type != 'tag' }}
@@ -63,6 +66,7 @@ jobs:
           ${{ env.DOCKER_IMAGE }}:${{ env.SHORT_SHA }},
           ${{ env.DOCKER_IMAGE }}:latest
 
+  # Release prod
   prod:
     runs-on: ubuntu-latest
     if: ${{ github.ref_type == 'tag' }}
@@ -94,3 +98,5 @@ jobs:
         docker pull $DOCKER_IMAGE:latest
         docker image tag $DOCKER_IMAGE:latest $DOCKER_IMAGE:$SEM_TAG
         docker image push $DOCKER_IMAGE:$SEM_TAG
+
+  # slack-complete:
