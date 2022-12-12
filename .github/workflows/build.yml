@@ -104,4 +104,4 @@ jobs:
     if: ${{ success() }}
     uses: norrona/workflows/.github/workflows/slack-build-success.yml@workflows/build_slack_integration
     with:
-      ${{ needs.slack-start.outputs.update-ts}}
+      update-ts: ${{ needs.slack-start.outputs.update-ts}}
