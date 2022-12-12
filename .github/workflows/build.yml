@@ -10,14 +10,38 @@ on:
         type: string
 
 jobs:
-  slack-start:
-    uses: norrona/workflows/.github/workflows/slack-build-start.yml@workflows/build_slack_integration
-    secrets: inherit
-
   test:
     runs-on: ubuntu-latest
     if: ${{ github.ref_type != 'tag' }}
     steps:
+
+    - id: slack
+      name: Notify build start
+      uses: slackapi/slack-github-action@v1.23.0
+      with:
+        channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
+        payload: |
+          {
+            "attachments": [
+              {
+                "color": "dbab09",
+                "fields": [
+              {
+                "title": "Build started for ${{ github.workflow }}",
+                "short": false,
+                "value": "Status: In Progress"
+              },
+              {
+                "value": "${{ github.server_url }}"
+                }
+              ]
+              }
+            ]
+          }
+
+      env:
+        SLACK_BOT_TOKEN: ${{ secrets.SLACK_BUILD_UPDATE}}
+
     - name: Checkout
       uses: actions/checkout@v3
 
