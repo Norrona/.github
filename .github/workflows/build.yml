@@ -12,6 +12,7 @@ on:
 jobs:
   slack-start:
     uses: norrona/workflows/.github/workflows/slack-build-start.yml@workflows/build_slack_integration
+    secrets: inherit
 
   test:
     runs-on: ubuntu-latest
