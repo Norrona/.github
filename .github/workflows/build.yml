@@ -101,17 +101,33 @@ jobs:
         docker image push $DOCKER_IMAGE:$SEM_TAG
 
 
-  slack-success:
+  slack-test-success:
     uses: norrona/workflows/.github/workflows/slack-build-success.yml@workflows/build_slack_integration
-    # needs: [slack-start]
-    if: ${{ jobs.test.result == success() }}
+    needs: [slack-start, test]
+    if: ${{ success() }}
     secrets: inherit
     with:
       update-ts: ${{ needs.slack-start.outputs.update-ts}}
 
-  slack-fail:
+  slack-test-fail:
     uses: norrona/workflows/.github/workflows/slack-build-fail.yml@workflows/build_slack_integration
     needs: [slack-start, test]
+    if: ${{ failure() }}
+    secrets: inherit
+    with:
+      update-ts: ${{ needs.slack-start.outputs.update-ts}}
+
+  slack-prod-success:
+    uses: norrona/workflows/.github/workflows/slack-build-success.yml@workflows/build_slack_integration
+    needs: [slack-start, prod]
+    if: ${{ success() }}
+    secrets: inherit
+    with:
+      update-ts: ${{ needs.slack-start.outputs.update-ts}}
+
+  slack-prod-fail:
+    uses: norrona/workflows/.github/workflows/slack-build-fail.yml@workflows/build_slack_integration
+    needs: [slack-start, prod]
     if: ${{ failure() }}
     secrets: inherit
     with:
