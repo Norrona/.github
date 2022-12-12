@@ -11,7 +11,7 @@ on:
         required: true
 
 jobs:
-  on-failure:
+  slack:
     runs-on: ubuntu-latest
     steps:
       - uses: slackapi/slack-github-action@v1.23.0
