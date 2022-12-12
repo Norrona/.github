@@ -10,22 +10,15 @@ on:
         type: string
 
 jobs:
+  slack-start:
+    uses: norrona/workflows/.github/workflows/slack-build-start.yml@workflows/build_slack_integration
+
   test:
     runs-on: ubuntu-latest
     if: ${{ github.ref_type != 'tag' }}
     steps:
     - name: Checkout
       uses: actions/checkout@v3
-
-    - id: slack
-      name: Notify build start
-      uses: slackapi/slack-github-action@v1.23.0
-      with:
-        channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
-        payload-file-path: "./payload-slack-start.json"
-      env:
-        SLACK_BOT_TOKEN: ${{ secrets.SLACK_BUILD_UPDATE}}
-
 
       # Authenticate to Google CLoud
     - id: "auth"
