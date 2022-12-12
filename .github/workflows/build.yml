@@ -104,7 +104,7 @@ jobs:
   slack-success:
     uses: norrona/workflows/.github/workflows/slack-build-success.yml@workflows/build_slack_integration
     needs: [slack-start]
-    if: ${{ jobs.test.result == 'success' }}
+    if: ${{ jobs.test.result == success() }}
     secrets: inherit
     with:
       update-ts: ${{ needs.slack-start.outputs.update-ts}}
