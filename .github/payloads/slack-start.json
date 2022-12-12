@@ -1,0 +1,18 @@
+
+{
+  "attachments": [
+    {
+      "color": "dbab09",
+        "fields": [
+          {
+            "title": "Build started for ${{ github.workflow }}",
+            "short": false,
+            "value": "Status: In Progress"
+          },
+          {
+            "value": "${{ github.server_url }}"
+          }
+        ]
+      }
+    ]
+  }

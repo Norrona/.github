@@ -14,6 +14,14 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.ref_type != 'tag' }}
     steps:
+    - id: slack
+      name: Notify build start
+      uses: slackapi/slack-github-action@v1.23.0
+      with:
+        channel-id: "C04BFN79UMS"
+        payload-file-path: "./.github/payloads/slack-start.json"
+      env:
+        SLACK_BOT_TOKEN: ${{ secrets.SLACK_BUILD_UPDATE}}
 
     - name: Checkout
       uses: actions/checkout@v3
