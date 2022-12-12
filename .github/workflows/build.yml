@@ -106,3 +106,11 @@ jobs:
     secrets: inherit
     with:
       update-ts: ${{ needs.slack-start.outputs.update-ts}}
+
+  slack-fail:
+    uses: norrona/workflows/.github/workflows/slack-build-fail.yml@workflows/build_slack_integration
+    needs: [slack-start, test]
+    if: ${{ failure() }}
+    secrets: inherit
+    with:
+      update-ts: ${{ needs.slack-start.outputs.update-ts}}
