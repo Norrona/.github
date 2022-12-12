@@ -2,23 +2,24 @@ name: "notify build start"
 
 on:
   workflow_call:
-    inputs:
-      WORKFLOW_NAME:
-        required: false
-        type: string
+    outputs:
+      update-ts:
+        value: ${{ jobs.slack.outputs.output1 }}
     secrets:
       SLACK_BUILD_UPDATE:
         required: true
 
 jobs:
-  start:
+  slack:
     runs-on: ubuntu-latest
+    outputs:
+      output1: ${{ steps.start.outputs.ts }}
     steps:
-      - id: slack
+      - id: start
         name: Notify build start
         uses: slackapi/slack-github-action@v1.23.0
         with:
-          channel-id: "C04BFN79UMS"
+          channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
           payload: |
             {
               "attachments": [
@@ -31,12 +32,12 @@ jobs:
                       "value": "Status: In Progress"
                     },
                     {
-                      "value": "<https://www.github.com/${{ github.repository }}/actions/workflows/${{ env.WORKFLOW_FILE }}|link>"
+                      "value": "<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|link>"
                     }
                   ]
                 }
               ]
             }
+
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BUILD_UPDATE}}
-          WORKFLOW_FILE: ${{ inputs.WORKFLOW_NAME }}.yaml

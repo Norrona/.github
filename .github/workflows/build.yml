@@ -10,6 +10,12 @@ on:
         type: string
 
 jobs:
+  # Notify build start on slack
+  slack-start:
+    uses: norrona/workflows/.github/workflows/slack-build-start.yml@main
+    secrets: inherit
+
+  # Build test
   test:
     runs-on: ubuntu-latest
     if: ${{ github.ref_type != 'tag' }}
@@ -61,6 +67,7 @@ jobs:
           ${{ env.DOCKER_IMAGE }}:${{ env.SHORT_SHA }},
           ${{ env.DOCKER_IMAGE }}:latest
 
+  # Release prod
   prod:
     runs-on: ubuntu-latest
     if: ${{ github.ref_type == 'tag' }}
@@ -92,3 +99,36 @@ jobs:
         docker pull $DOCKER_IMAGE:latest
         docker image tag $DOCKER_IMAGE:latest $DOCKER_IMAGE:$SEM_TAG
         docker image push $DOCKER_IMAGE:$SEM_TAG
+
+
+  slack-test-success:
+    uses: norrona/workflows/.github/workflows/slack-build-success.yml@main
+    needs: [slack-start, test]
+    if: ${{ success() }}
+    secrets: inherit
+    with:
+      update-ts: ${{ needs.slack-start.outputs.update-ts}}
+
+  slack-test-fail:
+    uses: norrona/workflows/.github/workflows/slack-build-fail.yml@main
+    needs: [slack-start, test]
+    if: ${{ failure() }}
+    secrets: inherit
+    with:
+      update-ts: ${{ needs.slack-start.outputs.update-ts}}
+
+  slack-prod-success:
+    uses: norrona/workflows/.github/workflows/slack-build-success.yml@main
+    needs: [slack-start, prod]
+    if: ${{ success() }}
+    secrets: inherit
+    with:
+      update-ts: ${{ needs.slack-start.outputs.update-ts}}
+
+  slack-prod-fail:
+    uses: norrona/workflows/.github/workflows/slack-build-fail.yml@main
+    needs: [slack-start, prod]
+    if: ${{ failure() }}
+    secrets: inherit
+    with:
+      update-ts: ${{ needs.slack-start.outputs.update-ts}}

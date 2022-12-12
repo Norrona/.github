@@ -3,20 +3,21 @@ name: 'notify build successful'
 on:
   workflow_call:
     inputs:
-      WORKFLOW_NAME:
-        required: false
+      update-ts:
         type: string
+        required: false
     secrets:
       SLACK_BUILD_UPDATE:
         required: true
 
 jobs:
-  on-failure:
+  slack:
     runs-on: ubuntu-latest
     steps:
       - uses: slackapi/slack-github-action@v1.23.0
         with:
           channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
+          update-ts: ${{ inputs.update-ts }}
           payload: |
             {
               "attachments": [
@@ -29,7 +30,7 @@ jobs:
                       "value": "Status: Successful"
                     },
                     {
-                      "value": "<https://www.github.com/${{ github.repository }}/actions/workflows/${{ env.WORKFLOW_FILE }}|link>"
+                      "value": "<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|link>"
                     }
                   ]
                 }
@@ -37,4 +38,3 @@ jobs:
             }
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BUILD_UPDATE}}
-          WORKFLOW_FILE: ${{ inputs.WORKFLOW_NAME }}.yaml
