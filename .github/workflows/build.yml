@@ -99,4 +99,8 @@ jobs:
         docker image tag $DOCKER_IMAGE:latest $DOCKER_IMAGE:$SEM_TAG
         docker image push $DOCKER_IMAGE:$SEM_TAG
 
-  # slack-complete:
+  slack-success:
+    if: ${{ sucess() }}
+    uses: norrona/workflows/.github/workflows/slack-build-success.yml@workflows/build_slack_integration
+    with:
+      ${{ needs.slack-start.outputs.update-ts}}
