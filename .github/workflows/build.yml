@@ -10,9 +10,9 @@ on:
         type: string
 
 jobs:
-  slack-start:
-    uses: "/.gihub/workflows/slack-build-start.yml"
-    secrets: inherit
+  # slack-start:
+  #   uses: "/.gihub/workflows/slack-build-start.yml"
+  #   secrets: inherit
   test:
     runs-on: ubuntu-latest
     if: ${{ github.ref_type != 'tag' }}
