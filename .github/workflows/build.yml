@@ -18,8 +18,8 @@ jobs:
       name: Notify build start
       uses: slackapi/slack-github-action@v1.23.0
       with:
-        channel-id: "C04BFN79UMS"
-        payload-file-path: "./.github/payloads/slack-start.json"
+        channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
+        payload-file-path: "./payloads/slack-start.json"
       env:
         SLACK_BOT_TOKEN: ${{ secrets.SLACK_BUILD_UPDATE}}
 
