@@ -12,7 +12,7 @@ on:
 jobs:
   # Notify build start on slack
   slack-start:
-    uses: norrona/workflows/.github/workflows/slack-build-start.yml@workflows/build_slack_integration
+    uses: norrona/workflows/.github/workflows/slack-build-start.yml@main
     secrets: inherit
 
   # Build test
@@ -102,7 +102,7 @@ jobs:
 
 
   slack-test-success:
-    uses: norrona/workflows/.github/workflows/slack-build-success.yml@workflows/build_slack_integration
+    uses: norrona/workflows/.github/workflows/slack-build-success.yml@main
     needs: [slack-start, test]
     if: ${{ success() }}
     secrets: inherit
@@ -110,7 +110,7 @@ jobs:
       update-ts: ${{ needs.slack-start.outputs.update-ts}}
 
   slack-test-fail:
-    uses: norrona/workflows/.github/workflows/slack-build-fail.yml@workflows/build_slack_integration
+    uses: norrona/workflows/.github/workflows/slack-build-fail.yml@main
     needs: [slack-start, test]
     if: ${{ failure() }}
     secrets: inherit
@@ -118,7 +118,7 @@ jobs:
       update-ts: ${{ needs.slack-start.outputs.update-ts}}
 
   slack-prod-success:
-    uses: norrona/workflows/.github/workflows/slack-build-success.yml@workflows/build_slack_integration
+    uses: norrona/workflows/.github/workflows/slack-build-success.yml@main
     needs: [slack-start, prod]
     if: ${{ success() }}
     secrets: inherit
@@ -126,7 +126,7 @@ jobs:
       update-ts: ${{ needs.slack-start.outputs.update-ts}}
 
   slack-prod-fail:
-    uses: norrona/workflows/.github/workflows/slack-build-fail.yml@workflows/build_slack_integration
+    uses: norrona/workflows/.github/workflows/slack-build-fail.yml@main
     needs: [slack-start, prod]
     if: ${{ failure() }}
     secrets: inherit
