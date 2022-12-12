@@ -21,8 +21,6 @@ jobs:
     if: ${{ github.ref_type != 'tag' }}
     steps:
 
-    - run: exit 1
-
     - name: Checkout
       uses: actions/checkout@v3
 
@@ -105,8 +103,8 @@ jobs:
 
   slack-success:
     uses: norrona/workflows/.github/workflows/slack-build-success.yml@workflows/build_slack_integration
-    needs: [slack-start, test]
-    if: ${{ success() }}
+    needs: [slack-start]
+    if: ${{ jobs.test.result == 'success' }}
     secrets: inherit
     with:
       update-ts: ${{ needs.slack-start.outputs.update-ts}}
