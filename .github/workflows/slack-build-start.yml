@@ -27,7 +27,7 @@ jobs:
                   "color": "dbab09",
                   "fields": [
                     {
-                      "title": "Build started for ${{ github.repository }}",
+                      "title": "Build started for ${{ github.repository }}/\n${{ github.workflow}}",
                       "short": false,
                       "value": "Status: In Progress"
                     },
