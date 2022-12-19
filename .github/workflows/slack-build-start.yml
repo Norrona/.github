@@ -27,12 +27,15 @@ jobs:
                   "color": "dbab09",
                   "fields": [
                     {
-                      "title": "Build started for ${{ github.repository }}",
+                      "title": "${{ github.repository }}/${{ github.workflow}}",
                       "short": false,
                       "value": "Status: In Progress"
                     },
                     {
-                      "value": "<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|link>"
+                      "value": "Ref: ${{ github.ref }}"
+                    },
+                    {
+                      "value": "<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|Link>"
                     }
                   ]
                 }

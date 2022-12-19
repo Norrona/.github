@@ -25,12 +25,15 @@ jobs:
                   "color": "28a745",
                   "fields": [
                     {
-                      "title": "Build succeeded for ${{ github.repository }}",
+                      "title": "${{ github.repository }}/${{ github.workflow }}",
                       "short": false,
                       "value": "Status: Successful"
                     },
                     {
-                      "value": "<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|link>"
+                      "value": "Ref: ${{ github.ref }}"
+                    },
+                    {
+                      "value": "<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|Link>"
                     }
                   ]
                 }

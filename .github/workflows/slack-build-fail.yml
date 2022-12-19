@@ -25,12 +25,16 @@ jobs:
                   "color": "dc3545",
                   "fields": [
                     {
-                      "title": "Build failed for ${{ github.repository }}",
+                      "title": "${{ github.repository }}/${{ github.workflow }}",
                       "short": false,
                       "value": "Status: Failed"
                     },
                     {
-                      "value": "<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|link>"
+                      "value": "Ref: ${{ github.ref }}"
+                    },
+
+                    {
+                      "value": "<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|Link>"
                     }
                   ]
                 }
