@@ -22,6 +22,7 @@ jobs:
     if: ${{ github.ref_type != 'tag' }}
     steps:
 
+    - run: exit 1
     - name: Checkout
       uses: actions/checkout@v3
 
@@ -102,7 +103,7 @@ jobs:
         docker image push $DOCKER_IMAGE:$SEM_TAG
 
 
-  slack-test-success:
+  slack-success:
     uses: norrona/workflows/.github/workflows/slack-build-success.yml@main
     needs: [test, prod]
     if: |
@@ -114,26 +115,30 @@ jobs:
     with:
       update-ts: ${{ needs.slack-start.outputs.update-ts}}
 
-  slack-test-fail:
+  slack-fail:
     uses: norrona/workflows/.github/workflows/slack-build-fail.yml@main
-    needs: [slack-start, test]
-    if: ${{ failure() && github.actor != 'dependabot[bot]' }}
+    needs: [test, prod]
+    if: |
+      always() &&
+      contains(needs.*.result, 'failure') &&
+      !contains(needs.*.result, 'success') &&
+      github.actor != 'dependabot[bot]'
     secrets: inherit
     with:
       update-ts: ${{ needs.slack-start.outputs.update-ts}}
 
-  slack-prod-success:
-    uses: norrona/workflows/.github/workflows/slack-build-success.yml@main
-    needs: [slack-start, prod]
-    if: ${{ success() && github.actor != 'dependabot[bot]' }}
-    secrets: inherit
-    with:
-      update-ts: ${{ needs.slack-start.outputs.update-ts}}
+  #slack-prod-success:
+    #uses: norrona/workflows/.github/workflows/slack-build-success.yml@main
+    #needs: [slack-start, prod]
+    #if: ${{ success() && github.actor != 'dependabot[bot]' }}
+    #secrets: inherit
+    #with:
+    #  update-ts: ${{ needs.slack-start.outputs.update-ts}}
 
-  slack-prod-fail:
-    uses: norrona/workflows/.github/workflows/slack-build-fail.yml@main
-    needs: [slack-start, prod]
-    if: ${{ failure() && github.actor != 'dependabot[bot]' }}
-    secrets: inherit
-    with:
-      update-ts: ${{ needs.slack-start.outputs.update-ts}}
+  #slack-prod-fail:
+    #uses: norrona/workflows/.github/workflows/slack-build-fail.yml@main
+    #needs: [slack-start, prod]
+    #if: ${{ failure() && github.actor != 'dependabot[bot]' }}
+    #secrets: inherit
+    #with:
+    #  update-ts: ${{ needs.slack-start.outputs.update-ts}}
