@@ -107,8 +107,8 @@ jobs:
     needs: [test, prod]
     if: |
       always() &&
-      contains(needs.test.result, 'success') && 
-      !contains(needs.test.result,'failure') &&
+      contains(needs.test.result, 'success') || contains(needs.prod.result 'success') && 
+      !contains(needs.test.result,'failure') && !contains(needs.prod.result,'failure') &&
       github.actor != 'dependabot[bot]'
     secrets: inherit
     with:
