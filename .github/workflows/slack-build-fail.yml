@@ -25,7 +25,7 @@ jobs:
                   "color": "dc3545",
                   "fields": [
                     {
-                      "title": "Build failed for ${{ github.repository }}/${{ github.workflow }}",
+                      "title": "${{ github.repository }}/${{ github.workflow }}",
                       "short": false,
                       "value": "Status: Failed"
                     },

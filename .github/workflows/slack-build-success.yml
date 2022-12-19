@@ -25,7 +25,7 @@ jobs:
                   "color": "28a745",
                   "fields": [
                     {
-                      "title": "Build succeeded for ${{ github.repository }}/${{ github.workflow }}",
+                      "title": "${{ github.repository }}/${{ github.workflow }}",
                       "short": false,
                       "value": "Status: Successful"
                     },
