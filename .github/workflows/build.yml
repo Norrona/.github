@@ -104,7 +104,7 @@ jobs:
 
   slack-test-success:
     uses: norrona/workflows/.github/workflows/slack-build-success.yml@main
-    needs: [slack-start, test, prod]
+    needs: [test, prod]
     if: |
       always() &&
       contains(needs.test.result == 'success') && 
