@@ -32,7 +32,7 @@ jobs:
                       "value": "Status: In Progress"
                     },
                     {
-                      "value": "Ref: ${{ github.ref }}"
+                      "value": "Ref: ${{ github.ref_name }}"
                     },
                     {
                       "value": "<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|Link>"
