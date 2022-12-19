@@ -104,10 +104,8 @@ jobs:
 
   slack-test-success:
     uses: norrona/workflows/.github/workflows/slack-build-success.yml@main
-    needs: [slack-start, test, prod]
-    if: |
-      success() &&
-      github.actor != 'dependabot[bot]')
+    needs: [slack-start, test]
+    if: ${{ success() && github.actor != 'dependabot[bot]') }}
     secrets: inherit
     with:
       update-ts: ${{ needs.slack-start.outputs.update-ts}}
