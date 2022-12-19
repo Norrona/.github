@@ -109,7 +109,7 @@ jobs:
       always() &&
       contains(needs.test.result, 'success') && 
       !contains(needs.test.result,'failure') &&
-      github.actor != 'dependabot[bot]')
+      github.actor != 'dependabot[bot]'
     secrets: inherit
     with:
       update-ts: ${{ needs.slack-start.outputs.update-ts}}
