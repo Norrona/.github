@@ -94,9 +94,9 @@ jobs:
       env:
         DOCKER_IMAGE: ${{ secrets.DOCKER_REPO }}/${{ inputs.APP_NAME }}
       run: |
-        docker pull ${{ env.DOCKER_IMAGE }}:latest
-        docker image tag ${{ env.DOCKER_IMAGE }}:latest ${{ env.DOCKER_IMAGE }}:$SEM_TAG
-        docker image push ${{ env.DOCKER_IMAGE }}:$SEM_TAG
+        docker pull $DOCKER_IMAGE:latest
+        docker image tag $DOCKER_IMAGE:latest $DOCKER_IMAGE:$SEM_TAG
+        docker image push $DOCKER_IMAGE:$SEM_TAG
 
 
   slack-success:
