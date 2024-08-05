@@ -53,7 +53,7 @@ jobs:
 
     # Build & Push Docker Container Image to Google Artifact Registry
     - name: Build and push
-      uses: docker/build-push-action@v3
+      uses: docker/build-push-action@v6
       env:
         DOCKER_IMAGE: ${{ secrets.DOCKER_REPO }}/${{ inputs.APP_NAME }}
       with:
