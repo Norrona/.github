@@ -1,0 +1,36 @@
+name: build
+on:
+  workflow_call:
+    inputs:
+      DOCKERFILE_PATH:
+        required: true
+        type: string
+      APP_NAME:
+        required: true
+        type: string
+
+jobs:
+  # Build check
+  check:
+    runs-on: ubuntu-latest
+    if: ${{ github.ref_type != 'tag' }}
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    # Build setup
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    # Build & Push Docker Container Image to Google Artifact Registry
+    - name: Build and push
+      uses: docker/build-push-action@v6
+      with:
+        context: .
+        push: false
+        file: ${{ inputs.DOCKERFILE_PATH }}
+        build-args: |
+          NUGETPASSWORD="test"
+          GHNUGETPASSWORD="test"
+        tags: |
+          ${{ inputs.APP_NAME }}:latest
