@@ -1,12 +1,12 @@
-### Description: 
+### 📝 Description:
 don't just explain what you've done, but *why*
 
-### Image(s) (remove when not applicable):
-a simple screenshot or diagram might help you colleague understand the changes better 
+### 🔗 Related issue(s):
+Fixes # (issue number link)
 
-### Related issue(s): 
-link(s)
+### 📷 Image(s) (remove when not applicable):
+a simple screenshot or diagram might help your colleague understand the changes better
 
-## Checklist (remove what's not appliable): 
-- [ ] Self review  
+### Checklist (remove what's not appliable):
+- [ ] Self review
 - [ ] Added tests
