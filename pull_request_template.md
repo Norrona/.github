@@ -8,5 +8,5 @@ a simple screenshot or diagram might help you colleague understand the changes b
 link(s)
 
 ## Checklist (remove what's not appliable): 
-[] Self review  
-[] Added tests
+- [ ] Self review  
+- [ ] Added tests
