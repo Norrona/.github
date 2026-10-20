@@ -8,5 +8,5 @@ Fixes # (issue number link)
 a simple screenshot or diagram might help your colleague understand the changes better
 
 ## Checklist (remove what's not appliable):
-- [] Self review
-- [] Added tests
+- [ ] Self review
+- [ ] Added tests
